@@ -1,0 +1,16 @@
+{
+  "name": "sse",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "graphql": "^16.9.0",
+    "graphql-sse": "^2.5.3",
+    "serve-static-bun": "^0.5.3"
+  }
+}
