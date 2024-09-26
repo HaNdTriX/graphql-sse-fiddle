@@ -1,6 +1,7 @@
 import { createClient } from "graphql-sse";
 
 const log = document.getElementById("log") as HTMLPreElement;
+const reset = document.getElementById("reset") as HTMLButtonElement;
 
 let retryIntervalRef: null | ReturnType<typeof setInterval> = null;
 
@@ -25,10 +26,15 @@ const client = createClient({
       console.log("connected");
       if (retryIntervalRef) clearInterval(retryIntervalRef);
     },
-    disconnected() {
-      console.log("disconnected");
-    },
   },
+});
+
+reset.addEventListener("click", async () => {
+  const mutation = await client.iterate({
+    query: "mutation { reset }",
+  });
+
+  writeLine(`Reset`, "green");
 });
 
 mount();
@@ -49,6 +55,7 @@ async function mount() {
 
   for await (const event of subscription) {
     writeLine(`Subscription: ${event.data!.count}`);
+    // await new Promise((resolve) => setTimeout(resolve, 5000));
   }
 }
 

@@ -665,6 +665,7 @@ function writeLine(text, color = "default") {
   log.insertBefore(div, log.firstChild);
 }
 var log = document.getElementById("log");
+var reset = document.getElementById("reset");
 var retryIntervalRef = null;
 var client2 = createClient({
   url: "http://localhost:4000/graphql/stream",
@@ -682,10 +683,13 @@ var client2 = createClient({
       console.log("connected");
       if (retryIntervalRef)
         clearInterval(retryIntervalRef);
-    },
-    disconnected() {
-      console.log("disconnected");
     }
   }
+});
+reset.addEventListener("click", async () => {
+  const mutation = await client2.iterate({
+    query: "mutation { reset }"
+  });
+  writeLine(`Reset`, "green");
 });
 mount();

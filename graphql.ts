@@ -37,4 +37,16 @@ export const schema = new GraphQLSchema({
       },
     },
   }),
+  mutation: new GraphQLObjectType({
+    name: "Mutation",
+    fields: {
+      reset: {
+        type: GraphQLInt,
+        resolve: () => {
+          count = 0;
+          return count;
+        },
+      },
+    },
+  }),
 });
